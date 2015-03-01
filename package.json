@@ -1,0 +1,40 @@
+{
+  "name": "Bylarm-unofficial",
+  "version": "0.0.0",
+  "description": "Unofficial site for Bylarm 2015",
+  "main": "webpack.config.js",
+  "scripts": {
+    "serve": "nodemon -w server.js -w webpack.config.js -w lib server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/einarlove/bylarm.git"
+  },
+  "author": "Einar Lôve",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/einarlove/bylarm/issues"
+  },
+  "homepage": "https://github.com/einarlove/bylarm",
+  "dependencies": {
+    "autoprefixer-loader": "^1.1.0",
+    "babel-core": "^4.5.5",
+    "babel-loader": "^4.0.0",
+    "css-loader": "^0.9.1",
+    "express": "^4.12.0",
+    "file-loader": "^0.8.1",
+    "lodash": "^3.3.1",
+    "nib": "^1.0.4",
+    "raw-loader": "^0.5.1",
+    "react": "^0.12.2",
+    "react-hot-loader": "^1.1.5",
+    "react-router": "^0.12.4",
+    "reflux": "^0.2.5",
+    "style-loader": "^0.8.3",
+    "stylus": "^0.49.3",
+    "stylus-loader": "^0.5.0",
+    "url-loader": "^0.5.5",
+    "webpack": "^1.6.0",
+    "webpack-dev-server": "^1.7.0"
+  }
+}

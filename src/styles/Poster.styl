@@ -1,0 +1,32 @@
+.poster {
+  position: relative
+  overflow: hidden
+}
+
+.poster::after {
+  content: ''
+  display: block
+  padding-bottom: 115%
+}
+
+.poster-text {
+  position: absolute
+  width: 63%
+  left: 10.5%
+  top: 50%
+  transform: translateY(-50%)
+}
+
+.poster-text svg {
+  width: 100%
+}
+
+.poster-image {
+  position: absolute
+  left: 0
+  top: 0
+  width: 100%
+  height: 120%
+  background-size: cover
+  background-position: top center
+}
