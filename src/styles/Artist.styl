@@ -89,6 +89,21 @@
   }
 }
 
+@media(max-device-width: 500px), (max-width: 500px){
+  .artist-top-link {
+    text-indent: 3em
+  }
+  .artist-top-link::before {
+    left: .8em
+  }
+}
+
+@media(max-device-width: 350px), (max-width: 350px){
+  .artist-top-link {
+    font-size: 0.8em
+  }
+}
+
 .show-item {
   display: block
   padding: 2em 1.5em
@@ -106,7 +121,7 @@
 }
 
 .artist-biography {
-  padding: 4em 1.5em
+  padding: 3em 1.5em
 }
 
 .artist-biography h1 {

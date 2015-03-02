@@ -11,7 +11,7 @@ var ArtistContent = React.createClass({
 
       return (
         <a className="show-item" href="#" key={show.venueTitle}>
-          <time className="show-date" datetime={showDate.toJSON()}>
+          <time className="show-date" dateTime={showDate.toJSON()}>
             {weekday + ' from ' + time + ' at '}
           </time>
           <span className="show-venue">{show.venueTitle}</span>
@@ -50,7 +50,7 @@ var ArtistContent = React.createClass({
       <div className="artist-content">
         <div className="artist-top-links">
           <a className="artist-top-link spotify" href="#">
-            Listen Spotify
+            Listen on Spotify
           </a>
           <a className="artist-top-link favorite" href="#">
             Add to favorites
