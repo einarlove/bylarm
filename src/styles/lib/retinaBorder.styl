@@ -1,0 +1,42 @@
+retinaBorder(top = false, right = false, bottom = false, left = false)
+  retinaGradients = ''
+
+  if top
+    retinaGradients += createGradient(top, 'top', appending: retinaGradients ? true : false)
+
+  if right
+    retinaGradients += createGradient(right, 'right', appending: retinaGradients ? true : false)
+
+  if bottom
+    retinaGradients += createGradient(bottom, 'bottom', appending: retinaGradients ? true : false)
+
+  if left
+    retinaGradients += createGradient(left, 'left', appending: retinaGradients ? true : false)
+
+  if retinaGradients
+    background: unquote(retinaGradients)
+
+
+createGradient(color, anchor, appending)
+  if anchor is 'top'
+    angle = 180deg
+    position = 'top left / 100% 1px'
+
+  if anchor is 'right'
+    angle = -90deg
+    position = 'top right / 1px 100%'
+
+  if anchor is 'bottom'
+    angle = 0deg
+    position = 'bottom right / 100% 1px'
+
+  if anchor is 'left'
+    angle = 90deg
+    position = 'bottom left / 1px 100%'
+
+  gradient = 'linear-gradient(' + angle + ',' + color + ',' + color + ' 50%, transparent 50%)' + position + ' no-repeat'
+
+  if appending
+    gradient = ',' + gradient
+
+  return gradient

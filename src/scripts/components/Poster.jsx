@@ -3,7 +3,7 @@ var React = require('react')
 require('styles/Poster')
 
 var PosterStore = require('../stores/PosterStore')
-var posterText = require('assets/poster-text.svg')
+var posterText = require('assets/poster-text.raw')
 
 var Poster = React.createClass({
   getInitialState() {
@@ -22,7 +22,7 @@ var Poster = React.createClass({
 
   onScroll() {
     this.setState({
-      inViewTween: window.scrollY / window.innerHeight
+      inViewTween: Math.min(1, Math.max(0, window.scrollY / window.innerHeight))
     })
   },
 

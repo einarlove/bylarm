@@ -1,23 +1,45 @@
 var React = require('react')
 var {Link} = require('react-router')
+var ListenerMixin = require('reflux').ListenerMixin
 
 var PosterStore = require('../stores/PosterStore')
+var ArtistStore = require('../stores/ArtistStore')
+var ArtistsList = require('./ArtistsList')
 var Poster = require('./Poster')
 
 require('styles/Overview')
 
 var Overview = React.createClass({
+  mixins: [ListenerMixin],
+
+  getInitialState() {
+    return this.getStateFromStore()
+  },
+
+  getStateFromStore() {
+    return {
+      artists: ArtistStore.getAll()
+    }
+  },
+
+  componentDidMount() {
+    this.listenTo(ArtistStore, this.onStoreChange)
+  },
+
+  onStoreChange() {
+    this.setState(this.getStateFromStore())
+  },
 
   render() {
     return (
       <main>
-        <Poster/>
-        <MainNav/>
-        <Lineup/>
+        <Poster />
+        <MainNav />
+        <Lineup />
+        <ArtistsList artists={this.state.artists}/>
       </main>
     )
   }
-        // <ArtistsList/>
 
 })
 

@@ -19,6 +19,7 @@
 
 .poster-text svg {
   width: 100%
+  height: 100%
 }
 
 .poster-image {
@@ -28,5 +29,21 @@
   width: 100%
   height: 120%
   background-size: cover
-  background-position: top center
+  background-position: center top
+}
+
+@media(min-aspect-ratio: 10 / 12) {
+  .poster::after {
+    padding-bottom: 70%
+  }
+
+  .poster-text {
+    width: 50%
+    height: 70%
+    left: 15%
+  }
+
+  .poster-image {
+    background-position: center 40%
+  }
 }

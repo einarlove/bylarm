@@ -22,8 +22,8 @@ var output = {
 var loaders = [
   { test: /\.jsx$/, loader: development ? 'react-hot!babel' : 'babel', exclude: /node_modules/},
   { test: /\.styl$/, loader: 'style-loader!css!autoprefixer!stylus', exclude: /node_modules/},
-  { test: /\.svg$/, loader: 'raw', exclude: /node_modules/},
-  {test: /.(png|jpg)$/, loader: 'url?limit=5000&name=images/[name].[ext]', exclude: /node_modules/}
+  { test: /\.raw$/, loader: 'raw', exclude: /node_modules/},
+  {test: /.(png|jpg|svg)$/, loader: 'url?limit=5000&name=images/[name].[ext]', exclude: /node_modules/}
 ]
 
 var plugins = []

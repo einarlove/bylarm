@@ -1,3 +1,5 @@
+@import 'lib/retinaBorder'
+
 .main-nav,
 .lineup {
   display: flex
@@ -36,9 +38,18 @@
 .lineup-link {
   width: 100%
   padding: 2em 0
-  background: linear-gradient(180deg, #E5E5E5, #E5E5E5 50%, transparent 50%) bottom left  / 100% 1px no-repeat
+  retinaBorder(bottom: #E5E5E5)
 }
 
-.lineup-link:last-child {
-  background: none
+@media(max-width: 900px) {
+  .lineup-link:last-child {
+    background: none
+  }
+}
+
+@media(min-width: 900px) {
+  .lineup-link {
+    width: 50%
+    retinaBorder(bottom: #E5E5E5, right: #E5E5E5)
+  }
 }

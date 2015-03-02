@@ -1,0 +1,14 @@
+<svg width="35" height="38" viewBox="-3 -4 35 38" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+  <title>Rectangle 14 + Star</title>
+  <desc>Created with Sketch.</desc>
+  <defs>
+    <path id="a" d="M10.838 31.916c-1.591.837-2.634.078-2.331-1.693l1.277-7.443-5.407-5.271c-1.287-1.255-.888-2.481.89-2.739l7.473-1.086 3.342-6.771c.795-1.612 2.085-1.612 2.88 0l3.342 6.771 7.473 1.086c1.779.258 2.177 1.485.89 2.739l-5.407 5.271 1.277 7.443c.304 1.771-.74 2.529-2.331 1.693l-6.684-3.514-6.684 3.514z" />
+  </defs>
+  <g sketch:type="MSLayerGroup" fill="none">
+    <path sketch:type="MSShapeGroup" d="M-3-5h35v38h-35z" />
+    <g transform="translate(-3 -5)">
+      <use stroke="#424242" stroke-width="2" fill="#fff" sketch:type="MSShapeGroup" xlink:href="#a" />
+      <use xlink:href="#a" />
+    </g>
+  </g>
+</svg>
