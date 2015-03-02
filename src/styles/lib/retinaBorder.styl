@@ -1,38 +1,52 @@
 retinaBorder(top = false, right = false, bottom = false, left = false)
   retinaGradients = ''
+  retinaSizes = ''
 
   if top
     retinaGradients += createGradient(top, 'top', appending: retinaGradients ? true : false)
+    retinaSizes = appendSize('100% 1px', retinaSizes)
 
   if right
     retinaGradients += createGradient(right, 'right', appending: retinaGradients ? true : false)
+    retinaSizes = appendSize('1px 100%', retinaSizes)
 
   if bottom
     retinaGradients += createGradient(bottom, 'bottom', appending: retinaGradients ? true : false)
+    retinaSizes = appendSize('100% 1px', retinaSizes)
 
   if left
     retinaGradients += createGradient(left, 'left', appending: retinaGradients ? true : false)
+    retinaSizes = appendSize('1px 100%', retinaSizes)
 
   if retinaGradients
     background: unquote(retinaGradients)
 
+    @media (-webkit-min-device-pixel-ratio: 1.5) {
+      background-size: unquote(retinaSizes)
+    }
+
+
+appendSize(size, sizes)
+  if sizes
+    sizes += ','
+  sizes += size
 
 createGradient(color, anchor, appending)
   if anchor is 'top'
     angle = 180deg
-    position = 'top left / 100% 1px'
+    position = 'top left / 100% 2px'
 
   if anchor is 'right'
     angle = -90deg
-    position = 'top right / 1px 100%'
+    position = 'top right / 2px 100%'
 
   if anchor is 'bottom'
     angle = 0deg
-    position = 'bottom right / 100% 1px'
+    position = 'bottom right / 100% 2px'
 
   if anchor is 'left'
     angle = 90deg
-    position = 'bottom left / 1px 100%'
+    position = 'bottom left / 2px 100%'
 
   gradient = 'linear-gradient(' + angle + ',' + color + ',' + color + ' 50%, transparent 50%)' + position + ' no-repeat'
 
