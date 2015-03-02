@@ -2,6 +2,7 @@ var React = require('react')
 var {Link} = require('react-router')
 var ListenerMixin = require('reflux').ListenerMixin
 
+var ExpandActions = require('../actions/ExpandActions')
 var PosterStore = require('../stores/PosterStore')
 var ArtistStore = require('../stores/ArtistStore')
 var ArtistsList = require('./ArtistsList')
@@ -24,6 +25,21 @@ var Overview = React.createClass({
 
   componentDidMount() {
     this.listenTo(ArtistStore, this.onStoreChange)
+    ExpandActions.expand.listen(this.onArtistExpand)
+    ExpandActions.shrink.listen(this.onArtistShrink)
+  },
+
+  componentWillUnmount() {
+    this.onArtistShrink()
+  },
+
+  onArtistExpand(id, element) {
+    document.body.style.overflow = 'hidden'
+    ArtistStore.get(id)
+  },
+
+  onArtistShrink() {
+    document.body.style.overflow = 'auto'
   },
 
   onStoreChange() {
@@ -64,11 +80,11 @@ var MainNav = React.createClass({
           Buy tickets
         </a>
 
-        { false &&
+        { true &&
           <a
             className="tertiary main-nav-link"
             href="#"
-            style={{backgroundColor: colors.tertiary}}>
+            style={{color: colors.tertiary, backgroundColor: '#ccc'}}>
             Next up at 6 pm
           </a>
         }

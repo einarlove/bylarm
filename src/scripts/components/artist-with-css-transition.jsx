@@ -1,8 +1,6 @@
 var React = require('react')
-var PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin')
 var classSet = require('../lib/classSet')
 var ExpandMixin = require('../lib/ExpandMixin')
-
 
 require('styles/Artist')
 
@@ -10,7 +8,7 @@ var ArtistHeader = require('./ArtistHeader')
 var ArtistContent = require('./ArtistContent')
 
 var Artist = React.createClass({
-  mixins: [ExpandMixin, PureRenderMixin],
+  mixins: [ExpandMixin],
   offset: 0,
 
   onHeaderClick() {
@@ -19,34 +17,25 @@ var Artist = React.createClass({
 
   onExpand() {
     this.offset = -this.getDOMNode().getBoundingClientRect().top
+  },
 
+  onShrink() {
+    this.offset = 0
   },
 
   getStyle() {
-    var offset = this.state.expandTransition * this.offset
-
-    if(!this.state.inTransition) {
-      offset = Math.round(offset)
-    }
-
     return {
-      WebkitTransform: 'translate3d(0,' + offset + 'px,0)',
+      WebkitTransform: 'translate3d(0,' + this.offset + 'px,0)',
       height: this.state.expanded ? window.innerHeight : 'auto'
     }
   },
 
   render() {
     var artist = this.props.artist
-    var expanding = this.state.inTransition && this.state.expanded
-    var shrinking = this.state.inTransition && !this.state.expanded
-    var fullyExpanded = !this.state.inTransition && this.state.expanded
-
     var className = classSet({
       'artist': true,
-      'in-transition': this.state.inTransition,
-      'expanding': expanding,
-      'expanded': fullyExpanded,
-      'shrinked': !fullyExpanded && !expanding
+      'in-transition': this.state.expandTransition > 0 && this.state.expandTransition < 1,
+      'expanded': this.state.expanded
     })
 
     return (
@@ -58,7 +47,7 @@ var Artist = React.createClass({
           expanded={this.state.expanded}
         />
 
-        {(this.state.expanded || shrinking) &&
+        {this.state.expanded &&
           <ArtistContent artist={artist}/>
         }
       </article>

@@ -6,13 +6,13 @@ require('styles/ArtistContent')
 var ArtistContent = React.createClass({
 
   renderShowList() {
-    var shows = this.props.artist.shows.map(show => {
+    var shows = this.props.artist.shows.map((show, key) => {
       var showDate = moment(show.showDateStart + show.showTimeStart, 'YYYY-MM-DDHH:mm:ss')
       var time = showDate.format('LT')
       var weekday = moment.weekdays(showDate.weekday())
 
       return (
-        <a className="show-item" href="#" key={show.venueTitle}>
+        <a className="show-item" href="#" key={key}>
           <time className="show-date" dateTime={showDate.toJSON()}>
             {weekday + ' from ' + time + ' at '}
           </time>
@@ -31,7 +31,7 @@ var ArtistContent = React.createClass({
 
   renderBiography() {
     var paragraphs = this.props.artist.descriptionParagraphs.map((paragraph, key) => {
-      return <p key={key}>{paragraph}</p>
+      return <p key={key} dangerouslySetInnerHTML={{__html: paragraph}}/>
     })
 
     return (
@@ -59,8 +59,8 @@ var ArtistContent = React.createClass({
           </a>
         </div>
 
-        {this.renderShowList()}
-        {this.renderBiography()}
+        {this.props.artist.shows && this.renderShowList()}
+        {this.props.artist.descriptionParagraphs && this.renderBiography()}
 
       </div>
     )
