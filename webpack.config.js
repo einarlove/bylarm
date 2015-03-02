@@ -6,7 +6,7 @@ var devtool = development && 'eval'
 
 var server = {}
 server.port = process.env.PORT || 5000
-server.url = (process.env.HOSTNAME || 'http://localhost:') + server.port
+server.url = (process.env.HOSTNAME || 'http://localhost') + ':' + server.port
 
 var entries = {
   bundle: [ './src/scripts/index.jsx' ]
