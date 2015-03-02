@@ -1,5 +1,7 @@
 var React = require('react')
 
+require('styles/ArtistHeader')
+
 var ArtistHeader = React.createClass({
 
   getDefaultProps() {

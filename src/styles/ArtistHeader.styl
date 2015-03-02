@@ -1,0 +1,45 @@
+.artist-header {
+  position: relative
+  color: rgba(255,255,255, .95)
+  cursor: pointer
+}
+
+.artist-header .close-button {
+  position: absolute
+
+  background-image: url('assets/pull-down-icon.svg')
+  background-repeat: no-repeat
+  background-size: contain
+  width: 22px
+  height: 14px
+  left: 1.5em
+  top: 1.3em
+}
+
+.artist-name {
+  position: absolute
+  bottom: .6em
+  left: 0.75em
+  right: 0.75em
+  font-size: 2em
+  font-weight: 500
+  letter-spacing: 0.25px
+}
+
+.artist-image {
+  position: absolute
+  left: 0
+  right: 0
+  bottom: 0
+  top: 0
+  background-size: cover
+  background-position: center 25%
+}
+
+.artist-image::after {
+  content: ''
+  display: block
+  width: 100%
+  height: 100%
+  background-image: linear-gradient(-167deg, rgba(22, 2, 17, 0) 20%, rgba(22, 2, 17, 0.6) 100%)
+}
