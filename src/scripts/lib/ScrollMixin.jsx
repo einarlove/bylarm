@@ -1,5 +1,5 @@
 var Tween = require('../lib/tween')
-var defaults = require('lodash/object/defaults')
+var assign = require('lodash/object/assign')
 
 var lastScrollPosition = window.scrollY
 
@@ -13,9 +13,9 @@ module.exports = {
   },
 
   scrollToElement(element, options) {
-    options = defaults(options, {
+    options = assign({
       atCenter: false
-    })
+    }, options)
 
     var elementRect = element.getBoundingClientRect()
     var position = elementRect.top + window.scrollY
@@ -33,10 +33,10 @@ module.exports = {
   },
 
   animateScrollToPosition(position, options) {
-    options = defaults(options, {
+    options = assign({
       duration: 600,
       easing: 'expoOut'
-    })
+    }, options)
 
     var start = lastScrollPosition = window.scrollY
     var delta = position - start
