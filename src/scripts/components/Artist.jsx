@@ -62,7 +62,8 @@ var Artist = React.createClass({
     }
 
     return {
-      WebkitTransform: 'translate3d(0,' + offset + 'px,0)'
+      WebkitTransform: 'translate3d(0,' + offset + 'px,0)',
+      height: this.state.expanded ? window.innerHeight : 'auto'
     }
   },
 

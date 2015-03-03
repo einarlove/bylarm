@@ -31,8 +31,10 @@ var Overview = React.createClass({
     var id = this.getParams().id
 
     if(id) {
+      document.body.style.overflow = 'hidden'
       ArtistActions.open(id)
     } else {
+      document.body.style.overflow = 'auto'
       ArtistActions.close()
     }
   },
