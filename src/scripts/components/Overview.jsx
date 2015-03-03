@@ -1,29 +1,14 @@
 var React = require('react')
 var {State} = require('react-router')
-var ListenerMixin = require('reflux').ListenerMixin
 
 var ArtistActions = require('../actions/ArtistActions')
-var ArtistStore = require('../stores/ArtistStore')
+var ArtistStoreMixin = require('../stores/ArtistStoreMixin')
 var LineupList = require('./LineupList')
 var ArtistList = require('./ArtistList')
 var Poster = require('./Poster')
 
 var Overview = React.createClass({
-  mixins: [ListenerMixin, State],
-
-  getInitialState() {
-    return this.getStateFromStore()
-  },
-
-  getStateFromStore() {
-    return {
-      artists: ArtistStore.getAll()
-    }
-  },
-
-  componentWillMount() {
-    this.listenTo(ArtistStore, this.onStoreChange)
-  },
+  mixins: [State, ArtistStoreMixin],
 
   componentWillReceiveProps() {
     var id = this.getParams().id
@@ -35,10 +20,6 @@ var Overview = React.createClass({
       document.body.style.overflow = 'auto'
       ArtistActions.close()
     }
-  },
-
-  onStoreChange() {
-    this.setState(this.getStateFromStore())
   },
 
   render() {
