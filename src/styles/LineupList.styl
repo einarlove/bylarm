@@ -1,0 +1,30 @@
+@import 'lib/retinaBorder'
+.lineup-list {
+  display: flex
+  flex-wrap: wrap
+}
+
+.lineup-item {
+  width: 100%
+  padding: 2em 0
+  retinaBorder(bottom: #E5E5E5)
+  font-weight: 600
+  letter-spacing: .4px
+  text-transform: uppercase
+  text-align: center
+  cursor: pointer
+  -webkit-font-smoothing: subpixel-antialiased
+}
+
+@media(max-width: 900px) {
+  .lineup-item:last-child {
+    background: none
+  }
+}
+
+@media(min-width: 900px) {
+  .lineup-item {
+    width: 50%
+    retinaBorder(bottom: #E5E5E5, right: #E5E5E5)
+  }
+}

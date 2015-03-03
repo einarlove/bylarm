@@ -32,10 +32,6 @@ var PosterStore = Reflux.createStore({
 
   getPoster() {
     return this.currentPoster
-  },
-
-  getPosterColors() {
-    return this.currentPoster.colors || {}
   }
 })
 

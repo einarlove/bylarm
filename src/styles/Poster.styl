@@ -1,9 +1,9 @@
-.poster {
+.poster-cover {
   position: relative
   overflow: hidden
 }
 
-.poster::after {
+.poster-cover::after {
   content: ''
   display: block
   padding-bottom: 115%
@@ -30,6 +30,28 @@
   height: 100%
   background-size: cover
   background-position: center top
+}
+
+.poster-links {
+  display: flex
+  flex-wrap: wrap
+}
+
+.poster-link {
+  width: 50%
+  padding: 1em 0 .93em
+  color: rgba(255, 255, 255, 0.95)
+  font-weight: 600
+  letter-spacing: .4px
+  text-transform: uppercase
+  text-align: center
+  cursor: pointer
+}
+
+@media(max-device-width: 300px), (max-width: 450px) {
+  .poster-link {
+    font-size: .8em
+  }
 }
 
 @media(min-aspect-ratio: 10 / 12) {
