@@ -1,17 +1,17 @@
 var React = require('react')
-var {Link} = require('react-router')
+var {Link, State} = require('react-router')
 var ListenerMixin = require('reflux').ListenerMixin
 
-var ExpandActions = require('../actions/ExpandActions')
+var ArtistActions = require('../actions/ArtistActions')
 var PosterStore = require('../stores/PosterStore')
 var ArtistStore = require('../stores/ArtistStore')
-var ArtistsList = require('./ArtistsList')
+var ArtistList = require('./ArtistList')
 var Poster = require('./Poster')
 
 require('styles/Overview')
 
 var Overview = React.createClass({
-  mixins: [ListenerMixin],
+  mixins: [ListenerMixin, State],
 
   getInitialState() {
     return this.getStateFromStore()
@@ -25,21 +25,16 @@ var Overview = React.createClass({
 
   componentDidMount() {
     this.listenTo(ArtistStore, this.onStoreChange)
-    ExpandActions.expand.listen(this.onArtistExpand)
-    ExpandActions.shrink.listen(this.onArtistShrink)
   },
 
-  componentWillUnmount() {
-    this.onArtistShrink()
-  },
+  componentWillReceiveProps() {
+    var id = this.getParams().id
 
-  onArtistExpand(id, element) {
-    document.body.style.overflow = 'hidden'
-    ArtistStore.get(id)
-  },
-
-  onArtistShrink() {
-    document.body.style.overflow = 'auto'
+    if(id) {
+      ArtistActions.open(id)
+    } else {
+      ArtistActions.close()
+    }
   },
 
   onStoreChange() {
@@ -52,11 +47,10 @@ var Overview = React.createClass({
         <Poster />
         <MainNav />
         <Lineup />
-        <ArtistsList artists={this.state.artists}/>
+        <ArtistList artists={this.state.artists} activeArtist={this.getParams().id}/>
       </main>
     )
   }
-
 })
 
 var MainNav = React.createClass({

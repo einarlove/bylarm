@@ -1,10 +1,13 @@
 var Reflux = require('reflux')
 var request = require('axios')
+var ArtistActions = require('../actions/ArtistActions')
 
 var ArtistStore = Reflux.createStore({
   init() {
     this.artists = {}
     this.artists.list = []
+
+    ArtistActions.open.listen(this.get)
   },
 
   get(id) {

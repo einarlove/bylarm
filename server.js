@@ -1,6 +1,6 @@
 var webpack = require('webpack')
 var express = require('express')
-var app = server = express()
+var app = express()
 var config = require('./webpack.config')
 var webpackDevServer = require('webpack-dev-server')
 var router = require('./lib/router')
@@ -9,7 +9,7 @@ app.use(express.static('./build'))
 app.use(router)
 
 if(config.debug) {
-  server = new webpackDevServer(webpack(config), {
+  var server = new webpackDevServer(webpack(config), {
     contentBase: false,
     hot: true,
     watchDelay: 100,
@@ -29,7 +29,7 @@ if(config.debug) {
     }
   })
 
-  server.use(app)
+  app = server.use(app)
 }
 
 console.log('\nListening on %s\n', config.server.url)

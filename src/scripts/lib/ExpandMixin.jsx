@@ -1,4 +1,3 @@
-var ExpandActions = require('../actions/ExpandActions')
 var Tween = require('../lib/tween')
 
 var tweeningParams = {
@@ -15,9 +14,6 @@ var Mixin = {
   },
 
   expand() {
-    ExpandActions.expand(this.props.artist.id, this.getDOMNode())
-    this.onExpand && this.onExpand()
-
     this.setState({
       expanded: true,
       inTransition: true
@@ -32,9 +28,6 @@ var Mixin = {
   },
 
   shrink() {
-    ExpandActions.shrink()
-    this.onShrink && this.onShrink()
-
     this.setState({
       expanded: false,
       inTransition: true
@@ -53,11 +46,17 @@ var Mixin = {
       inTransition: false
     })
 
-    this.onTransitionEnd && this.onTransitionEnd()
+    if(this.onTransitionEnd) {
+      this.onTransitionEnd()
+    }
   },
 
   toggleExpand() {
-    this.state.expanded ? this.shrink() : this.expand()
+    if(this.state.expanded) {
+      this.shrink()
+    } else {
+      this.expand()
+    }
   }
 }
 

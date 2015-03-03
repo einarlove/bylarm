@@ -1,5 +1,4 @@
 var React = require('react')
-var debounce = require('lodash/function/debounce')
 
 require('styles/ArtistsList')
 
@@ -18,7 +17,7 @@ var ArtistsList = React.createClass({
     var artists = this.sortAlphabetical(this.props.artists.list).map(artist => {
       return (
         <li className="artists-list-item" key={artist.id}>
-          <Artist artist={artist}/>
+            <Artist artist={artist} active={this.props.activeArtist === artist.id}/>
         </li>
       )
     })
@@ -29,7 +28,6 @@ var ArtistsList = React.createClass({
       </ul>
     )
   }
-
 })
 
 module.exports = ArtistsList

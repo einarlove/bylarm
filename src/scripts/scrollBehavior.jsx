@@ -1,7 +1,7 @@
 module.exports = {
   updateScrollPosition: function(position, actionType) {
-    /*———————————————————————————/
-        No behavior spesificed yet
-    /———————————————————————————*/
+    if(position) {
+      window.scrollTo(0, position.y)
+    }
   }
 }
