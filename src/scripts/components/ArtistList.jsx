@@ -1,7 +1,5 @@
 var React = require('react')
 
-require('styles/ArtistsList')
-
 var Artist = require('./Artist')
 
 var ArtistsList = React.createClass({
@@ -15,17 +13,13 @@ var ArtistsList = React.createClass({
 
   render() {
     var artists = this.sortAlphabetical(this.props.artists.list).map(artist => {
-      return (
-        <li className="artists-list-item" key={artist.id}>
-            <Artist artist={artist}/>
-        </li>
-      )
+      return <Artist artist={artist} key={artist.id}/>
     })
 
     return (
-      <ul className="artists-list">
+      <section className="artists-list">
         {artists}
-      </ul>
+      </section>
     )
   }
 })

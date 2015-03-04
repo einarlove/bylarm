@@ -6,7 +6,6 @@ var shallowEqual = require('react/lib/shallowEqual')
 
 require('styles/Artist')
 
-var ArtistHeader = require('./ArtistHeader')
 var ArtistContent = require('./ArtistContent')
 
 var Artist = React.createClass({
@@ -76,9 +75,14 @@ var Artist = React.createClass({
     }
   },
 
+  getHeaderImageStyle() {
+    return {
+      backgroundImage: 'url(' + this.props.artist.image + ')'
+    }
+  },
+
   render() {
     var artist = this.props.artist
-
     var className = classSet({
       'artist': true,
       'open': this.state.open,
@@ -87,14 +91,14 @@ var Artist = React.createClass({
 
     return (
       <article className={className}>
-        <ArtistHeader
-          name={artist.name}
-          image={artist.image}
-          onClick={this.onHeaderClick}
-        />
+        <header className="artist-header" onClick={this.onHeaderClick}>
+          <div className="artist-image" style={this.getHeaderImageStyle()}></div>
+          <h1 className="artist-name">{artist.name}</h1>
+          <div className="close-button"></div>
+        </header>
 
-        {this.state.open &&
-          <ArtistContent artist={artist}/>
+        {this.state.open && !artist.loading &&
+          <ArtistContent artist={artist} />
         }
       </article>
     )

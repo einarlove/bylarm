@@ -4,10 +4,6 @@ var raf = require('raf')
 
 var lastScrollPosition = window.scrollY
 
-var updateScroll = function(position) {
-
-}
-
 module.exports = {
   scrollTo(options) {
     this.scrollToElement(this.getDOMNode(), options)
@@ -46,7 +42,7 @@ module.exports = {
     }
 
     var start = lastScrollPosition = window.scrollY
-    var delta = position - start
+    var delta = Math.round(position) - start
 
     new Tween(options)
       .on('update', p => this.scrollToPosition(start + p * delta))
