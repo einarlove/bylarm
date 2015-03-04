@@ -25,19 +25,30 @@ var Artist = React.createClass({
   },
 
   onArtistOpen(id) {
+    // if this artist is open but not being opened
     if(this.state.open && id !== this.props.artist.id) {
-      var contentHeight = this.refs.content.getDOMNode().getBoundingClientRect().height
-      ArtistActions.close(this.props.artist.id, contentHeight)
+      var rect = this.refs.content.getDOMNode().getBoundingClientRect()
+      ArtistActions.close(this.props.artist.id, rect)
       this.close()
     }
   },
 
-  onArtistClose(id, contentHeight) {
+  onArtistClose(id, artistRect) {
+    // if this artist was opened and is not the one being closed
     if(this.state.open && id !== this.props.artist.id) {
-      this.scrollInstantToPosition(window.scrollY - contentHeight)
-      this.setState({
-        scrollOrigin: this.state.scrollOrigin - contentHeight
-      })
+
+      // if this artist is below the one closing
+      if(artistRect.top < this.getDOMNode().getBoundingClientRect().top) {
+
+        // scroll back the height of the previous artist's cotent
+        this.scrollInstantToPosition(window.scrollY - artistRect.height)
+
+        // remove the offset from scrollOrigin
+        this.setState({
+          scrollOrigin: this.state.scrollOrigin - artistRect.height
+        })
+      }
+
     }
   },
 
