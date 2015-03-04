@@ -17,14 +17,6 @@ var ArtistStoreMixin = function(options) {
 
     componentWillMount: function() {
       this.listenTo(ArtistStore, this.onArtistStoreChange)
-
-      ArtistActions.open.listen(() => {
-        document.body.style.overflow = 'hidden'
-      })
-
-      ArtistActions.close.listen(() => {
-        document.body.style.overflow = 'visible'
-      })
     },
 
     onArtistStoreChange: function() {
