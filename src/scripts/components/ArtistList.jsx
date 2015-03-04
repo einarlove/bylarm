@@ -17,7 +17,7 @@ var ArtistsList = React.createClass({
     var artists = this.sortAlphabetical(this.props.artists.list).map(artist => {
       return (
         <li className="artists-list-item" key={artist.id}>
-            <Artist artist={artist} active={this.props.activeArtist === artist.id}/>
+            <Artist artist={artist}/>
         </li>
       )
     })

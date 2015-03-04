@@ -1,8 +1,7 @@
 var React = require('react')
-var {Navigation} = require('react-router')
+var {Navigation, State} = require('react-router')
 var PureRenderMixin = require('react/lib/ReactComponentWithPureRenderMixin')
 var classSet = require('../lib/classSet')
-var ExpandMixin = require('../lib/ExpandMixin')
 var ScrollMixin = require('../lib/ScrollMixin')
 var ArtistActions = require('../actions/ArtistActions')
 
@@ -12,73 +11,76 @@ var ArtistHeader = require('./ArtistHeader')
 var ArtistContent = require('./ArtistContent')
 
 var Artist = React.createClass({
-  mixins: [ExpandMixin, PureRenderMixin, ScrollMixin, Navigation],
-  offset: 0,
+  mixins: [PureRenderMixin, ScrollMixin, Navigation, State],
+
+  getInitialState() {
+    return {
+      open: false
+    }
+  },
 
   componentDidMount() {
-    ArtistActions.open.listen(this.onArtistOpen)
-    ArtistActions.close.listen(this.onArtistClose)
-
     // Scroll to element if active on mount
-    if (this.props.active) {
+    if (this.isActiveArtist()) {
       this.scrollTo({
         atCenter: true,
         duration: 1200,
         easing: 'cubicInOut',
         instant: window.innerWidth < 600,
-        onEnd: () => ArtistActions.open(this.props.artist.id)
+        onEnd: this.open
       })
     }
   },
 
-  onArtistOpen(id) {
-    if(id === this.props.artist.id) {
-      this.offset = -this.getDOMNode().getBoundingClientRect().top
-      this.expand()
+  isActiveArtist() {
+    return this.getParams().id === this.props.artist.id
+  },
+
+  componentWillReceiveProps() {
+    if(!this.state.open && this.isActiveArtist()) {
+      this.open()
+    }
+    else if(this.state.open && !this.isActiveArtist()) {
+      this.close()
     }
   },
 
-  onArtistClose() {
-    if(this.state.expanded) {
-      this.shrink()
-    }
+  open() {
+    this.setState({
+      open: true,
+      offset: -this.getDOMNode().getBoundingClientRect().top
+    })
+  },
+
+  close() {
+    this.setState({
+      open: false,
+      offset: 0
+    })
   },
 
   onHeaderClick() {
-    if(this.props.active) {
-      if(!this.goBack()) {
-        this.transitionTo('overview')
-      }
+    if(this.state.open) {
+      ArtistActions.close()
     } else {
-      this.transitionTo('overview-artist', {id: this.props.artist.id})
+      ArtistActions.open(this.props.artist.id)
     }
   },
 
   getStyle() {
-    var offset = this.state.expandTransition * this.offset
-
-    if(!this.state.inTransition) {
-      offset = Math.round(offset)
-    }
-
     return {
-      WebkitTransform: 'translate3d(0,' + offset + 'px,0)',
-      height: this.state.expanded ? window.innerHeight : 'auto'
+      WebkitTransform: 'translate3d(0,' + this.state.offset + 'px,0)',
+      height: this.state.open ? window.innerHeight : 'auto'
     }
   },
 
   render() {
     var artist = this.props.artist
-    var expanded = !this.state.inTransition && this.state.expanded
-    var expanding = this.state.inTransition && this.state.expanded
-    var shrinking = this.state.inTransition && !this.state.expanded
 
     var className = classSet({
       'artist': true,
-      'in-transition': this.state.inTransition,
-      'expanding': expanding,
-      'expanded': expanded,
-      'shrinked': !expanded && !expanding
+      'open': this.state.open,
+      'not-open': !this.state.open
     })
 
     return (
@@ -87,10 +89,9 @@ var Artist = React.createClass({
           name={artist.name}
           image={artist.image}
           onClick={this.onHeaderClick}
-          expanded={this.state.expanded}
         />
 
-        {(this.state.expanded || shrinking) &&
+        {this.state.open &&
           <ArtistContent artist={artist}/>
         }
       </article>

@@ -1,5 +1,6 @@
 var ArtistStore = require('../stores/ArtistStore')
 var ListenerMixin = require('reflux').ListenerMixin
+var ArtistActions = require('../actions/ArtistActions')
 
 var ArtistStoreMixin = {
   mixins: [ListenerMixin],
@@ -17,6 +18,14 @@ var ArtistStoreMixin = {
 
   componentWillMount() {
     this.listenTo(ArtistStore, this.onStoreChange)
+
+    ArtistActions.open.listen(() => {
+      document.body.style.overflow = 'hidden'
+    })
+
+    ArtistActions.close.listen(() => {
+      document.body.style.overflow = 'visible'
+    })
   },
 
   onStoreChange() {

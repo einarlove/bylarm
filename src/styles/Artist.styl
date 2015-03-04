@@ -1,5 +1,8 @@
+@import 'lib/easings'
+
 .artist {
-  // -webkit-backface-visibility: hidden
+  -webkit-backface-visibility: hidden
+    transition: transform .6s ease-out-expo
 }
 
 .artist {
@@ -11,11 +14,10 @@
   background-color: white
 }
 
-.expanded.artist {
+.open.artist {
   overflow: scroll
 }
 
-.expanded.artist,
-.expanding.artist {
+.open.artist {
   z-index: 1
 }
