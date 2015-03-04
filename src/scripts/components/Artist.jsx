@@ -15,7 +15,9 @@ var Artist = React.createClass({
 
   getInitialState() {
     return {
-      open: false
+      open: false,
+      scrollOrigin: null,
+      contentExpanded: false
     }
   },
 
@@ -27,7 +29,7 @@ var Artist = React.createClass({
         duration: 1200,
         easing: 'cubicInOut',
         instant: window.innerWidth < 600,
-        onEnd: this.open
+        onEnd: () => ArtistActions.open(this.props.artist.id)
       })
     }
   },
@@ -45,17 +47,51 @@ var Artist = React.createClass({
     }
   },
 
+  componentWillUpdate(nextProps, nextState) {
+  },
+
+  componentDidUpdate(prevProps, prevState) {
+    // Combat browser scroll bug when you go back and forth in history
+    if(this.state.contentExpanded && !prevState.contentExpanded) {
+      this.scrollTo({instant: true})
+    }
+  },
+
   open() {
     this.setState({
       open: true,
-      offset: -this.getDOMNode().getBoundingClientRect().top
+      scrollOrigin: window.scrollY
     })
+
+    this.scrollTo({onEnd: this.expandContent})
   },
 
   close() {
     this.setState({
-      open: false,
-      offset: 0
+      open: false
+    })
+
+    var offset = this.getDOMNode().getBoundingClientRect().top
+    var instant = offset > 50
+    var position = instant ? window.scrollY : this.state.scrollOrigin
+    var duration = 500 + Math.abs(offset / 2)
+
+    this.animateScrollToPosition(position, {
+      instant,
+      duration,
+      onEnd: this.minimizeContent
+    })
+  },
+
+  expandContent() {
+    this.setState({
+      contentExpanded: true
+    })
+  },
+
+  minimizeContent() {
+    this.setState({
+      contentExpanded: false
     })
   },
 
@@ -68,6 +104,7 @@ var Artist = React.createClass({
   },
 
   getStyle() {
+    return {}
     return {
       WebkitTransform: 'translate3d(0,' + this.state.offset + 'px,0)',
       height: this.state.open ? window.innerHeight : 'auto'
@@ -79,7 +116,7 @@ var Artist = React.createClass({
 
     var className = classSet({
       'artist': true,
-      'open': this.state.open,
+      'open': this.state.open && this.state.contentExpanded,
       'not-open': !this.state.open
     })
 
@@ -91,7 +128,7 @@ var Artist = React.createClass({
           onClick={this.onHeaderClick}
         />
 
-        {this.state.open &&
+        {this.state.contentExpanded &&
           <ArtistContent artist={artist}/>
         }
       </article>

@@ -1,5 +1,6 @@
 var Tween = require('../lib/tween')
 var assign = require('lodash/object/assign')
+var raf = require('raf')
 
 var lastScrollPosition = window.scrollY
 
@@ -35,8 +36,14 @@ module.exports = {
   animateScrollToPosition(position, options) {
     options = assign({
       duration: 600,
-      easing: 'expoOut'
+      easing: 'expoOut',
+      onEnd: () => {}
     }, options)
+
+    if(options.instant) {
+      this.scrollInstantToPosition(position)
+      options.onEnd()
+    }
 
     var start = lastScrollPosition = window.scrollY
     var delta = position - start
@@ -45,6 +52,12 @@ module.exports = {
       .on('update', p => this.scrollToPosition(start + p * delta))
       .on('done', options.onEnd)
       .start()
+  },
+
+  scrollInstantToPosition(position) {
+    raf(() => {
+      this.scrollToPosition(position)
+    })
   },
 
   scrollToPosition(position) {
