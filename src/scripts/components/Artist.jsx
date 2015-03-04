@@ -2,6 +2,7 @@ var React = require('react')
 var classSet = require('../lib/classSet')
 var ScrollMixin = require('../lib/ScrollMixin')
 var ArtistStore = require('../stores/ArtistStore')
+var ArtistActions = require('../actions/ArtistActions')
 var shallowEqual = require('react/lib/shallowEqual')
 
 require('styles/Artist')
@@ -15,6 +16,28 @@ var Artist = React.createClass({
     return {
       open: false,
       scrollOrigin: null
+    }
+  },
+
+  componentDidMount() {
+    ArtistActions.open.listen(this.onArtistOpen)
+    ArtistActions.close.listen(this.onArtistClose)
+  },
+
+  onArtistOpen(id) {
+    if(this.state.open && id !== this.props.artist.id) {
+      var contentHeight = this.refs.content.getDOMNode().getBoundingClientRect().height
+      ArtistActions.close(this.props.artist.id, contentHeight)
+      this.close()
+    }
+  },
+
+  onArtistClose(id, contentHeight) {
+    if(this.state.open && id !== this.props.artist.id) {
+      this.scrollInstantToPosition(window.scrollY - contentHeight)
+      this.setState({
+        scrollOrigin: this.state.scrollOrigin - contentHeight
+      })
     }
   },
 
@@ -54,6 +77,8 @@ var Artist = React.createClass({
   },
 
   open() {
+    ArtistActions.open(this.props.artist.id)
+
     this.setState({
       open: true,
       inTransition: false
@@ -98,7 +123,7 @@ var Artist = React.createClass({
         </header>
 
         {this.state.open && !artist.loading &&
-          <ArtistContent artist={artist} />
+          <ArtistContent artist={artist} ref="content"/>
         }
       </article>
     )
