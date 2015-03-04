@@ -1,27 +1,39 @@
 var React = require('react')
+var shallowEqual = require('react/lib/shallowEqual')
+
+var Spot = require('../lib/Spot')
 var classSet = require('../lib/classSet')
 var ScrollMixin = require('../lib/ScrollMixin')
 var ArtistStore = require('../stores/ArtistStore')
 var ArtistActions = require('../actions/ArtistActions')
-var shallowEqual = require('react/lib/shallowEqual')
 
 require('styles/Artist')
 
 var ArtistContent = require('./ArtistContent')
 
 var Artist = React.createClass({
-  mixins: [ScrollMixin],
+  mixins: [ScrollMixin, Spot.Mixin({
+    proximity: '300%',
+    triggerOnce: true
+  })],
 
   getInitialState() {
     return {
       open: false,
-      scrollOrigin: null
+      scrollOrigin: null,
+      beenSpotted: false
     }
   },
 
   componentDidMount() {
     ArtistActions.open.listen(this.onArtistOpen)
     ArtistActions.close.listen(this.onArtistClose)
+  },
+
+  onSpot() {
+    this.setState({
+      beenSpotted: true
+    })
   },
 
   onArtistOpen(id) {
@@ -60,6 +72,7 @@ var Artist = React.createClass({
   },
 
   onOpen() {
+    console.log(this)
     ArtistStore.get(this.props.artist.id)
 
     this.setState({
@@ -113,7 +126,7 @@ var Artist = React.createClass({
 
   getHeaderImageStyle() {
     return {
-      backgroundImage: 'url(' + this.props.artist.image + ')'
+      backgroundImage: 'url(' + (this.state.beenSpotted ? this.props.artist.image : '') + ')'
     }
   },
 
