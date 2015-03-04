@@ -44,10 +44,24 @@ module.exports = {
     var start = lastScrollPosition = window.scrollY
     var delta = Math.round(position) - start
 
-    new Tween(options)
+    this.addMouseWheelCancelling()
+    this.tween = new Tween(options)
       .on('update', p => this.scrollToPosition(start + p * delta))
       .on('done', options.onEnd)
+      .on('stop', this.removeMouseWheelCancelling)
       .start()
+  },
+
+  addMouseWheelCancelling() {
+    window.addEventListener('mousewheel', this.cancelScrollAnimation)
+  },
+
+  removeMouseWheelCancelling() {
+    window.removeEventListener('mousewheel', this.cancelScrollAnimation)
+  },
+
+  cancelScrollAnimation() {
+    this.tween.stop()
   },
 
   scrollInstantToPosition(position) {
