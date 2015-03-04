@@ -29,10 +29,12 @@ Spot.stop = function() {
 }
 
 Spot.addListener = function(listener) {
-  Spot.listeners.push(assign({}, listener, {
+  listener = assign({}, listener, {
     eventName: 'enter',
     withinProximityLastFrame: false
-  }))
+  })
+
+  Spot.listeners.push(listener)
   Spot.start()
   return listener
 }
