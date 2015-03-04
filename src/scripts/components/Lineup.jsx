@@ -10,7 +10,7 @@ var ScrollMixin = require('../lib/ScrollMixin')
 require('styles/Lineup')
 
 var Lineup = React.createClass({
-  mixins: [ArtistStoreMixin, Navigation, State, ScrollMixin],
+  mixins: [ArtistStoreMixin(), Navigation, State, ScrollMixin],
 
   componentDidMount() {
     this.scrollTo({instant: true})
