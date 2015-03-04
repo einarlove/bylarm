@@ -3,7 +3,7 @@ var {Route, DefaultRoute, Redirect} = require('react-router')
 
 var Application = require('./components/Application')
 var Overview = require('./components/Overview')
-var Lineup = {}
+var Lineup = require('./components/Lineup')
 
 var routes = (
   <Route handler={Application}>
@@ -11,11 +11,12 @@ var routes = (
       <Redirect from="artist/?" to="overview"/>
       <Route name="overview-artist" path="artist/:id?"/>
     </Route>
+
+    <Route name="lineup" path=":day" handler={Lineup}>
+      <Redirect from="artist/?" to="lineup"/>
+      <Route name="lineup-artist" path="artist/:id"/>
+    </Route>
   </Route>
 )
-    // <Route name="lineup" path=":day" handler={Lineup}>
-    //   <Redirect from="artist/?" to="lineup"/>
-    //   <Route name="lineup-artist" path="artist/:id"/>
-    // </Route>
 
 module.exports = routes

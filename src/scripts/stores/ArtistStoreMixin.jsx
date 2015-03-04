@@ -16,21 +16,21 @@ var ArtistStoreMixin = {
     }
   },
 
-  componentWillMount() {
-    this.listenTo(ArtistStore, this.onStoreChange)
-
-    ArtistActions.open.listen(() => {
-      document.body.style.overflow = 'hidden'
-    })
-
-    ArtistActions.close.listen(() => {
-      document.body.style.overflow = 'visible'
-    })
-  },
-
   onStoreChange() {
     var getState = this.getStateFromStore || this.defaultGetStateFromStore
     this.setState(getState(ArtistStore))
+  },
+
+  componentWillMount() {
+    this.listenTo(ArtistStore, this.onStoreChange)
+
+    // ArtistActions.open.listen(() => {
+    //   document.body.style.overflow = 'hidden'
+    // })
+
+    // ArtistActions.close.listen(() => {
+    //   document.body.style.overflow = 'visible'
+    // })
   }
 }
 
