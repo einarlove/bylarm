@@ -4,7 +4,10 @@
   "description": "Unofficial site for Bylarm 2015",
   "main": "webpack.config.js",
   "scripts": {
-    "serve": "nodemon -w server.js -w webpack.config.js -w lib server.js"
+    "start": "node server.js",
+    "postinstall": "webpack",
+    "test-production": "NODE_ENV=production npm run postinstall && npm run start",
+    "serve": "nodemon -w server.js -w lib/serve.js -w webpack.config.js -w lib lib/serve.js"
   },
   "repository": {
     "type": "git",
