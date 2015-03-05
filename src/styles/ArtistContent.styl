@@ -10,13 +10,13 @@
   padding: 1em 0 .93em
   font-weight: 500
   font-size: 0.9em
-  text-indent: 3.8em
+  text-indent: 3.9em
 }
 
 .artist-menu-item::before {
   content: ''
   position: absolute
-  left: 1.4em
+  left: 1.6em
   width: 1.68em
   height: 1.25em
   top: 50%
@@ -58,15 +58,6 @@
 
   .is-favorite &::before {
     background-image url('assets/yellow-favorite-icon.svg')
-  }
-}
-
-@media(max-device-width: 500px), (max-width: 500px){
-  .artist-menu-item {
-    text-indent: 3em
-  }
-  .artist-menu-item::before {
-    left: .8em
   }
 }
 
