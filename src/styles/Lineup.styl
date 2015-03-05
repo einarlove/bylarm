@@ -22,16 +22,19 @@
 .favorites-filter-toggle {
     position: absolute
     top: 50%
-    right: 1.6em
+    right: 1em
     transform: translateY(-50%)
-    padding: .5em 1.4em .65em
-    font-size: .8em
+    padding: .4em .7em .3em
+    // font-size: .8em
     cursor: pointer
-    font-weight: 600
-    retinaBorder(top: #E5E5E5, right: #E5E5E5, bottom: #E5E5E5, left: #E5E5E5)
+    // font-weight: 600
+    // retinaBorder(top: #E5E5E5, right: #E5E5E5, bottom: #E5E5E5, left: #E5E5E5)
+    border: 1px solid #E5E5E5
+    border-radius: 3px
 }
 
 .favorites-filter-toggle.is-toggled {
+  border: 1px solid black
   background-color: #121212
   color: rgba(255, 255, 255, .95)
 }
@@ -82,10 +85,10 @@
 }
 
 .hour-header {
-  retinaBorder(top: #E5E5E5)
+  // retinaBorder(top: #E5E5E5, bottom: #E5E5E5)
   background-color: #121212
   text-align: center
   font-weight: 600
-  padding: .5em 0 .4em
+  padding: .7em 0 .6em
   color: rgba(255, 255, 255, .95)
 }
