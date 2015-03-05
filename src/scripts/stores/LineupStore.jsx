@@ -30,6 +30,7 @@ var LineupStore = Reflux.createStore({
   },
 
   sortHours(hours) {
+    console.log(hours)
     hours.sort((a, b) => {
       if(a.unixTimestamp < b.unixTimestamp) return -1
       if(a.unixTimestamp > b.unixTimestamp) return 1
