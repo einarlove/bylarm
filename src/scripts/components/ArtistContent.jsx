@@ -1,6 +1,7 @@
 var React = require('react')
 var classSet = require('../lib/classSet')
 var capitalize = require('lodash/string/capitalize')
+var ArtistStore = require('../stores/ArtistStore')
 
 require('styles/ArtistContent')
 
@@ -40,6 +41,21 @@ var ArtistContent = React.createClass({
     )
   },
 
+  renderArtistMenu() {
+    var favoriteButton = (
+      <div onClick={this.onFavorite} className="artist-menu-item favorite">
+        {this.props.favorite ? 'Remove as favorite' : 'Add to favorites'}
+      </div>
+    )
+
+    return (
+      <div className="artist-menu">
+        {this.renderMusicButton()}
+        {favoriteButton}
+      </div>
+    )
+  },
+
   renderMusicButton() {
     var music = this.props.artist.music
 
@@ -51,27 +67,24 @@ var ArtistContent = React.createClass({
     )
 
     var preferred = music.spotify || music.soundcloud || music.wimp
-    var className = 'artist-menu-item ' + preferred.type
+    var className = classSet('artist-menu-item', preferred.type)
 
     return (
       <a className={className} href={preferred.url}>
-        <span className="prepended-text">Play on </span>
+        <span className="prepended-text">Listen on </span>
         <span className="type">{capitalize(preferred.type)}</span>
       </a>
     )
   },
 
+  onFavorite() {
+    ArtistStore.toggleFavorite(this.props.artist.id)
+  },
+
   render() {
     return (
       <div className="artist-content">
-        <div className="artist-menu">
-          {this.renderMusicButton()}
-          <div className="artist-menu-item favorite">
-          <span className="prepended-text">Add to </span>
-            favorites
-          </div>
-        </div>
-
+        {this.renderArtistMenu()}
         {this.renderShowList()}
         {this.renderBiography()}
       </div>

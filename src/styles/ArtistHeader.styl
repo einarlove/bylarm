@@ -68,6 +68,31 @@
   background-repeat: no-repeat
 }
 
+
+.artist-header .favorite-star {
+  position: absolute
+  right: 1.5em
+  bottom 2.2em
+  width: 1em
+  height: 1em
+  background-color: blue
+  background: url('assets/white-favorite-icon.svg') no-repeat
+  background-size: contain
+  opacity: 0
+  transform: scale(0.7)
+
+  transition: .4s ease-out-expo
+}
+
+.is-favorite .favorite-star {
+  opacity: 1
+  transform: none
+}
+
+.has-venue .favorite-star {
+  bottom: 1.6em
+}
+
 .has-venue .artist-name {
   bottom: 1.3em
 }

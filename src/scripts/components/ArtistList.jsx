@@ -1,6 +1,7 @@
 var React = require('react')
 
 var Artist = require('./Artist')
+var ArtistStore = require('../stores/ArtistStore')
 
 var ArtistsList = React.createClass({
   sortAlphabetical(list) {
@@ -13,7 +14,8 @@ var ArtistsList = React.createClass({
 
   render() {
     var artists = this.sortAlphabetical(this.props.artists).map(artist => {
-      return <Artist artist={artist} key={artist.id} locationAt={this.props.locationAt}/>
+      var favorite = ArtistStore.isFavorite(artist.id)
+      return <Artist artist={artist} favorite={favorite} key={artist.id} locationAt={this.props.locationAt}/>
     })
 
     return (

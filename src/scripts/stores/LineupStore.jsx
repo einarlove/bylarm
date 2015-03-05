@@ -18,7 +18,9 @@ var LineupStore = Reflux.createStore({
       this.days[weekday] = []
 
       request.get('https://blinding-inferno-1708.firebaseio.com/lineup/' + weekday + '.json').then(result => {
-        this.days[weekday] = map(result.data, hour => {return hour})
+        this.days[weekday] = map(result.data, hour => {
+          return hour
+        })
         this.sortHours(this.days[weekday])
         this.trigger()
       })

@@ -49,10 +49,15 @@
 }
 
 .artist-menu-item.favorite {
+  cursor: pointer
   retinaBorder(bottom: #bebebe)
 
   &::before {
-    background-image url('assets/favorite-icon.svg')
+    background-image url('assets/outlined-favorite-icon.svg')
+  }
+
+  .is-favorite &::before {
+    background-image url('assets/yellow-favorite-icon.svg')
   }
 }
 

@@ -135,11 +135,11 @@ var Artist = React.createClass({
         hour: this.props.locationAt
     }), 'venue')
 
-    var className = classSet({
-      'artist': true,
+    var className = classSet('artist', {
       'open': this.state.open,
       'not-open': !this.state.open,
-      'has-venue': venue
+      'has-venue': venue,
+      'is-favorite': this.props.favorite
     })
 
     return (
@@ -149,10 +149,11 @@ var Artist = React.createClass({
           <h1 className="artist-name">{artist.name}</h1>
           {venue && <div className="context-venue">{venue}</div>}
           <div className="close-button"></div>
+          <div className="favorite-star"></div>
         </header>
 
         {this.state.open && !artist.loading &&
-          <ArtistContent artist={artist} ref="content"/>
+          <ArtistContent artist={artist} favorite={this.props.favorite} ref="content"/>
         }
       </article>
     )

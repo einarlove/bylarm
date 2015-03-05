@@ -65,7 +65,6 @@ var Lineup = React.createClass({
         {this.renderHourSections()}
       </main>
     )
-        // <ArtistList artists={this.state.artists}/>
   }
 
 })
