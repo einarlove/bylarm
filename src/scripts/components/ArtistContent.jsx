@@ -1,5 +1,6 @@
 var React = require('react')
 var classSet = require('../lib/classSet')
+var capitalize = require('lodash/string/capitalize')
 
 require('styles/ArtistContent')
 
@@ -10,7 +11,7 @@ var ArtistContent = React.createClass({
       return (
         <a className="show-item" href={show.location} key={key} target="_blank">
           <time className="show-date">
-            {show.weekday + ' from ' + show.hour + ' at '}
+            {capitalize(show.weekday) + ' from ' + show.hour + ' at '}
           </time>
           <span className="show-venue">{show.venue}</span>
           <div className="maps-reminder">Find venue on Google Maps</div>
@@ -55,7 +56,7 @@ var ArtistContent = React.createClass({
     return (
       <a className={className} href={preferred.url}>
         <span className="prepended-text">Play on </span>
-        <span className="type">{preferred.type}</span>
+        <span className="type">{capitalize(preferred.type)}</span>
       </a>
     )
   },
