@@ -4,7 +4,6 @@ var shallowEqual = require('react/lib/shallowEqual')
 var Spot = require('../lib/Spot')
 var classSet = require('../lib/classSet')
 var ScrollMixin = require('../lib/ScrollMixin')
-var ArtistStore = require('../stores/ArtistStore')
 var ArtistActions = require('../actions/ArtistActions')
 
 require('styles/Artist')
@@ -72,9 +71,6 @@ var Artist = React.createClass({
   },
 
   onOpen() {
-    console.log(this)
-    ArtistStore.get(this.props.artist.id)
-
     this.setState({
       inTransition: true,
       scrollOrigin: window.scrollY

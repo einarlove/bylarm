@@ -1,10 +1,10 @@
 @import 'lib/retinaBorder'
 
-.artist-top-links {
+.artist-menu {
   display: flex
 }
 
-.artist-top-link {
+.artist-menu-item {
   position: relative
   width: 50%
   padding: 1em 0 .93em
@@ -13,7 +13,7 @@
   text-indent: 3.8em
 }
 
-.artist-top-link::before {
+.artist-menu-item::before {
   content: ''
   position: absolute
   left: 1.4em
@@ -26,7 +26,11 @@
   background-position: center
 }
 
-.artist-top-link.spotify {
+.artist-menu-item .type {
+  text-transform: capitalize
+}
+
+.artist-menu-item.spotify {
   background-color: #7AB800
   color: rgba(255,255,255, .95)
 
@@ -35,7 +39,20 @@
   }
 }
 
-.artist-top-link.favorite {
+.artist-menu-item.soundcloud {
+  background-color: #FF6A21
+  color: rgba(255,255,255, .95)
+
+  &::before {
+    background-image url('assets/soundcloud-logo.svg')
+  }
+}
+
+.artist-menu-item.no-music {
+  retinaBorder(bottom: #bebebe, right: #bebebe)
+}
+
+.artist-menu-item.favorite {
   retinaBorder(bottom: #bebebe)
 
   &::before {
@@ -44,17 +61,21 @@
 }
 
 @media(max-device-width: 500px), (max-width: 500px){
-  .artist-top-link {
+  .artist-menu-item {
     text-indent: 3em
   }
-  .artist-top-link::before {
+  .artist-menu-item::before {
     left: .8em
   }
 }
 
-@media(max-device-width: 350px), (max-width: 350px){
-  .artist-top-link {
+@media(max-device-width: 350px), (max-width: 550px){
+  .artist-menu-item {
     font-size: 0.8em
+  }
+
+  .artist-menu-item .prepended-text {
+    display: none
   }
 }
 

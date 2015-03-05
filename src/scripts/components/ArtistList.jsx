@@ -12,7 +12,7 @@ var ArtistsList = React.createClass({
   },
 
   render() {
-    var artists = this.sortAlphabetical(this.props.artists.list).map(artist => {
+    var artists = this.sortAlphabetical(this.props.artists).map(artist => {
       return <Artist artist={artist} key={artist.id}/>
     })
 

@@ -1,5 +1,5 @@
 var React = require('react')
-var moment = require('moment')
+var classSet = require('../lib/classSet')
 
 require('styles/ArtistContent')
 
@@ -7,16 +7,12 @@ var ArtistContent = React.createClass({
 
   renderShowList() {
     var shows = this.props.artist.shows.map((show, key) => {
-      var showDate = moment(show.showDateStart + show.showTimeStart, 'YYYY-MM-DDHH:mm:ss')
-      var time = showDate.format('LT')
-      var weekday = moment.weekdays(showDate.weekday())
-
       return (
-        <a className="show-item" href="#" key={key}>
-          <time className="show-date" dateTime={showDate.toJSON()}>
-            {weekday + ' from ' + time + ' at '}
+        <a className="show-item" href={show.location} key={key} target="_blank">
+          <time className="show-date">
+            {show.weekday + ' from ' + show.hour + ' at '}
           </time>
-          <span className="show-venue">{show.venueTitle}</span>
+          <span className="show-venue">{show.venue}</span>
           <div className="maps-reminder">Find venue on Google Maps</div>
         </a>
       )
@@ -30,7 +26,7 @@ var ArtistContent = React.createClass({
   },
 
   renderBiography() {
-    var paragraphs = this.props.artist.descriptionParagraphs.map((paragraph, key) => {
+    var paragraphs = this.props.artist.description.map((paragraph, key) => {
       return <p key={key} dangerouslySetInnerHTML={{__html: paragraph}}/>
     })
 
@@ -43,25 +39,40 @@ var ArtistContent = React.createClass({
     )
   },
 
-  render() {
-    if(this.props.artist.loading) {
-      return <div>loading</div>
-    }
+  renderMusicButton() {
+    var music = this.props.artist.music
+
+    if(!music) return (
+      <div className="artist-menu-item no-music">
+        <span className="type">No music</span>
+        <span className="prepended-text"> found</span>
+      </div>
+    )
+
+    var preferred = music.spotify || music.soundcloud || music.wimp
+    var className = 'artist-menu-item ' + preferred.type
 
     return (
+      <a className={className} href={preferred.url}>
+        <span className="prepended-text">Play on </span>
+        <span className="type">{preferred.type}</span>
+      </a>
+    )
+  },
+
+  render() {
+    return (
       <div className="artist-content">
-        <div className="artist-top-links">
-          <a className="artist-top-link spotify" href="#">
-            Listen on Spotify
-          </a>
-          <a className="artist-top-link favorite" href="#">
-            Add to favorites
-          </a>
+        <div className="artist-menu">
+          {this.renderMusicButton()}
+          <div className="artist-menu-item favorite">
+          <span className="prepended-text">Add to </span>
+            favorites
+          </div>
         </div>
 
-        {this.props.artist.shows && this.renderShowList()}
-        {this.props.artist.descriptionParagraphs && this.renderBiography()}
-
+        {this.renderShowList()}
+        {this.renderBiography()}
       </div>
     )
   }

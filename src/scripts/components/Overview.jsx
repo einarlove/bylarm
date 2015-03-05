@@ -1,13 +1,31 @@
 var React = require('react')
 
-var ArtistStoreMixin = require('../stores/ArtistStoreMixin')
-var ArtistActions = require('../actions/ArtistActions')
+var ListenerMixin = require('reflux').ListenerMixin
+var ArtistStore = require('../stores/ArtistStore')
 var LineupList = require('./LineupList')
 var ArtistList = require('./ArtistList')
 var Poster = require('./Poster')
 
 var Overview = React.createClass({
-  mixins: [ArtistStoreMixin()],
+  mixins: [ListenerMixin],
+
+  getInitialState() {
+    return this.getStateFromStore(ArtistStore)
+  },
+
+  getStateFromStore(Store) {
+    return {
+      artists: Store.getAll()
+    }
+  },
+
+  componentWillMount: function() {
+    this.listenTo(ArtistStore, this.onStoreChange)
+  },
+
+  onStoreChange: function() {
+    this.setState(this.getStateFromStore(ArtistStore))
+  },
 
   render() {
     return (
