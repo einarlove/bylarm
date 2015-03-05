@@ -10,7 +10,7 @@ var ArtistStore = Reflux.createStore({
     if(!localStorage.hasOwnProperty('favorites')) {
       localStorage.setItem('favorites', '')
     }
-    console.log(localStorage.getItem('favorites'))
+
     this.favorites = localStorage.getItem('favorites').split(',').map(v => {
       return +v
     })

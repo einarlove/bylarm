@@ -51,9 +51,10 @@
 .artist-header .context-venue {
   position: absolute
   font-size: 1.2em
-  bottom: 1.1em
+  bottom: 1.3em
   left: 1.35em
   right: 1.5em
+  white-space: nowrap
 }
 
 .artist-header .context-venue::before {
@@ -90,11 +91,11 @@
 }
 
 .has-venue .favorite-star {
-  bottom: 1.6em
+  bottom: 1.9em
 }
 
 .has-venue .artist-name {
-  bottom: 1.3em
+  bottom: 1.5em
 }
 
 .artist-image {
@@ -113,4 +114,10 @@
   width: 100%
   height: 100%
   background-image: linear-gradient(-167deg, rgba(22, 2, 17, 0) 20%, rgba(22, 2, 17, 0.6) 100%)
+}
+
+@media(max-device-width: 400px), (max-width: 600px) {
+  .artist-header {
+    font-size: .7em
+  }
 }

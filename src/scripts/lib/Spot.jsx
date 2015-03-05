@@ -57,8 +57,6 @@ Spot.interval = function() {
     return
   }
 
-  console.log(Spot.forceRun)
-
   for(var index = 0, length = Spot.listeners.length; index < length; index++){
     var windowHeight = window.innerHeight
     var listener = Spot.listeners[index]
