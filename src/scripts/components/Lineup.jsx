@@ -10,6 +10,7 @@ var ArtistList = require('./ArtistList')
 var ScrollMixin = require('../lib/ScrollMixin')
 var Spot = require('../lib/Spot')
 var classSet = require('../lib/classSet')
+var analytics = require('../lib/analytics')
 
 require('styles/Lineup')
 
@@ -34,6 +35,7 @@ var Lineup = React.createClass({
 
   componentDidMount() {
     this.scrollTo({instant: true})
+    analytics.page(this.getParams().day)
   },
 
   onStoreChange: function() {

@@ -5,6 +5,7 @@ var ArtistStore = require('../stores/ArtistStore')
 var LineupList = require('./LineupList')
 var ArtistList = require('./ArtistList')
 var Poster = require('./Poster')
+var analytics = require('../lib/analytics')
 
 var Overview = React.createClass({
   mixins: [ListenerMixin],
@@ -17,6 +18,10 @@ var Overview = React.createClass({
     return {
       artists: Store.getAll()
     }
+  },
+
+  componentDidMount() {
+    analytics.page('Overview')
   },
 
   componentWillMount: function() {

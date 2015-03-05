@@ -8,6 +8,7 @@ var Spot = require('../lib/Spot')
 var classSet = require('../lib/classSet')
 var ScrollMixin = require('../lib/ScrollMixin')
 var ArtistActions = require('../actions/ArtistActions')
+var analytics = require('../lib/analytics')
 
 require('styles/Artist')
 
@@ -107,12 +108,22 @@ var Artist = React.createClass({
       open: true,
       inTransition: false
     })
+
+    analytics.track('open', {
+      label: this.props.artist.name,
+      eventCategory: 'artist'
+    })
   },
 
   close() {
     this.setState({
       open: false,
       inTransition: false
+    })
+
+    analytics.track('close', {
+      label: this.props.artist.name,
+      eventCategory: 'artist'
     })
   },
 

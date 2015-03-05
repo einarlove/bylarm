@@ -2,6 +2,7 @@ var Reflux = require('reflux')
 var request = require('axios')
 var map = require('lodash/collection/map')
 var ArtistActions = require('../actions/ArtistActions')
+var analytics = require('../lib/analytics')
 
 var ArtistStore = Reflux.createStore({
   init() {
@@ -49,12 +50,22 @@ var ArtistStore = Reflux.createStore({
 
     this.updateLocalStorage()
     this.trigger()
+
+    analytics.track('remove favorite', {
+      label: id,
+      eventCategory: 'favorites'
+    })
   },
 
   setFavorite(id) {
     if(!this.isFavorite(id)) {
       this.favorites.push(+id)
     }
+
+    analytics.track('favorite', {
+      label: id,
+      eventCategory: 'favorites'
+    })
 
     this.updateLocalStorage()
     this.trigger()
