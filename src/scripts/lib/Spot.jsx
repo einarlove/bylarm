@@ -1,16 +1,6 @@
 var requestAnimationFrame = require('raf')
 var assign = require('lodash/object/assign')
 
-var covertToPixels = function(value) {
-  // If value is string and contains %, multiply with window height
-  if (typeof value === 'string') {
-    var percent = parseInt(value.substr(0, value.length - 1), 10) / 100
-    return windowHeight * percent
-  }
-
-  return value
-}
-
 var Spot = {
   listeners: [],
   running: false,
@@ -26,6 +16,11 @@ Spot.start = function() {
 
 Spot.stop = function() {
   Spot.running = false
+}
+
+Spot.refresh = function() {
+  Spot.forceRun = true
+  Spot.interval()
 }
 
 Spot.addListener = function(listener) {
@@ -57,10 +52,12 @@ Spot.interval = function() {
   }
 
   // Skip this interval if scroll position is the same
-  if(scrollTop === Spot.lastScrollTop) {
+  if(scrollTop === Spot.lastScrollTop && !Spot.forceRun) {
     requestAnimationFrame(Spot.interval)
     return
   }
+
+  console.log(Spot.forceRun)
 
   for(var index = 0, length = Spot.listeners.length; index < length; index++){
     var windowHeight = window.innerHeight
@@ -95,6 +92,7 @@ Spot.interval = function() {
     listener.withinProximityLastFrame = withinProximity
   }
 
+  Spot.forceRun = false
   Spot.lastScrollTop = scrollTop
   requestAnimationFrame(Spot.interval)
 }

@@ -15,6 +15,11 @@ var ArtistsList = React.createClass({
   render() {
     var artists = this.sortAlphabetical(this.props.artists).map(artist => {
       var favorite = ArtistStore.isFavorite(artist.id)
+
+      if(this.props.filterFavorites && !favorite) {
+        return
+      }
+
       return <Artist artist={artist} favorite={favorite} key={artist.id} locationAt={this.props.locationAt}/>
     })
 

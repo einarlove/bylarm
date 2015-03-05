@@ -8,6 +8,8 @@ var LineupStore = require('../stores/LineupStore')
 var ArtistStore = require('../stores/ArtistStore')
 var ArtistList = require('./ArtistList')
 var ScrollMixin = require('../lib/ScrollMixin')
+var Spot = require('../lib/Spot')
+var classSet = require('../lib/classSet')
 
 require('styles/Lineup')
 
@@ -38,6 +40,14 @@ var Lineup = React.createClass({
     this.setState(this.getStateFromStore())
   },
 
+  toggleFilter() {
+    this.setState({
+      filterFavorites: !this.state.filterFavorites
+    })
+
+    Spot.refresh()
+  },
+
   renderHourSections() {
     return this.state.hours.map(hour => {
       var artists = filter(this.state.artists, artist => {
@@ -47,19 +57,27 @@ var Lineup = React.createClass({
       return (
         <section className="hour-section" key={hour.title}>
           <header className="hour-header">{hour.title}</header>
-          <ArtistList artists={artists} locationAt={hour.title}/>
+          <ArtistList artists={artists} locationAt={hour.title} filterFavorites={this.state.filterFavorites}/>
         </section>
       )
     })
   },
 
   render() {
+    var favoriteFilterClass = classSet('favorites-filter-toggle', {
+      'is-toggled': this.state.filterFavorites
+    })
 
     return (
       <main>
         <header className="lineup-header">
           <Link className="back-button" to="overview">Back</Link>
           <h1 className="lineup-heading">{this.getParams().day}</h1>
+          <div className={favoriteFilterClass} onClick={this.toggleFilter}>
+            <span className="text">toggle favorites</span>
+            <div className="underlay"/>
+            <div className="switch"/>
+          </div>
         </header>
 
         {this.renderHourSections()}
