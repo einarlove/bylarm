@@ -3,7 +3,6 @@ var express = require('express')
 var path = require('path')
 var app = express()
 var config = require('./webpack.config')
-var router = require('./lib/router')
 
 app.use(express.static('./build'))
 
