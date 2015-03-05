@@ -47,7 +47,7 @@ var Lineup = React.createClass({
       return (
         <section className="hour-section" key={hour.title}>
           <header className="hour-header">{hour.title}</header>
-          <ArtistList artists={artists}/>
+          <ArtistList artists={artists} locationAt={hour.title}/>
         </section>
       )
     })

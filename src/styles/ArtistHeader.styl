@@ -46,7 +46,30 @@
   font-size: 2em
   font-weight: 500
   letter-spacing: 0.25px
-  transition: transform .6s ease-out-cubic
+}
+
+.artist-header .context-venue {
+  position: absolute
+  font-size: 1.2em
+  bottom: 1.1em
+  left: 1.35em
+  right: 1.5em
+}
+
+.artist-header .context-venue::before {
+  content: ''
+  display: inline-block
+  height: 0.8em
+  width: 0.6em
+  margin: 0 .3em -0.05em 0
+  background-image: url('assets/location-icon.svg')
+  background-size: contain
+  background-position: center
+  background-repeat: no-repeat
+}
+
+.has-venue .artist-name {
+  bottom: 1.3em
 }
 
 .artist-image {

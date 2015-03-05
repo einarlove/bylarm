@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="43px" height="28px" viewBox="0 0 43 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>Back button</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Day-page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="HTC-One" sketch:type="MSArtboardGroup" transform="translate(-44.000000, -212.000000)" fill-opacity="0.949360251" fill="#1B1B1B">
+            <g id="top-bar" sketch:type="MSLayerGroup" transform="translate(0.000000, 164.000000)">
+                <g id="Back-button" transform="translate(44.000000, 46.000000)" sketch:type="MSShapeGroup">
+                    <g id="Rectangle-11-+-Rectangle-12" transform="translate(15.201667, 15.837746) rotate(-315.000000) translate(-15.201667, -15.837746) translate(4.701667, 5.337746)">
+                        <rect id="Rectangle-11" x="0.694404591" y="17.3023256" width="19.4433286" height="3.60465116"></rect>
+                        <path d="M4.22861303,0.720930233 L4.22861303,20.9069767 L0.704768839,20.9069767 L0.704768839,0.720930233 L4.22861303,0.720930233 L4.22861303,0.720930233 Z" id="Rectangle-12"></path>
+                    </g>
+                    <rect id="Rectangle-13" x="4.86083214" y="14.4186047" width="38.097561" height="3.60465116"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

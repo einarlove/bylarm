@@ -1,6 +1,8 @@
 var React = require('react')
 var shallowEqual = require('react/lib/shallowEqual')
 
+var findWhere = require('lodash/collection/findWhere')
+var result = require('lodash/object/result')
 var Spot = require('../lib/Spot')
 var classSet = require('../lib/classSet')
 var ScrollMixin = require('../lib/ScrollMixin')
@@ -128,10 +130,16 @@ var Artist = React.createClass({
 
   render() {
     var artist = this.props.artist
+
+    var venue = result(findWhere(artist.shows, {
+        hour: this.props.locationAt
+    }), 'venue')
+
     var className = classSet({
       'artist': true,
       'open': this.state.open,
-      'not-open': !this.state.open
+      'not-open': !this.state.open,
+      'has-venue': venue
     })
 
     return (
@@ -139,6 +147,7 @@ var Artist = React.createClass({
         <header className="artist-header" onClick={this.onHeaderClick}>
           <div className="artist-image" style={this.getHeaderImageStyle()}></div>
           <h1 className="artist-name">{artist.name}</h1>
+          {venue && <div className="context-venue">{venue}</div>}
           <div className="close-button"></div>
         </header>
 
