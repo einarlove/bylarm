@@ -1,6 +1,7 @@
 var React = require('react')
 var shallowEqual = require('react/lib/shallowEqual')
 
+var ListenerMixin = require('reflux').ListenerMixin
 var findWhere = require('lodash/collection/findWhere')
 var result = require('lodash/object/result')
 var Spot = require('../lib/Spot')
@@ -13,7 +14,7 @@ require('styles/Artist')
 var ArtistContent = require('./ArtistContent')
 
 var Artist = React.createClass({
-  mixins: [ScrollMixin, Spot.Mixin({
+  mixins: [ScrollMixin, ListenerMixin, Spot.Mixin({
     proximity: '300%',
     triggerOnce: true
   })],
@@ -27,8 +28,8 @@ var Artist = React.createClass({
   },
 
   componentDidMount() {
-    ArtistActions.open.listen(this.onArtistOpen)
-    ArtistActions.close.listen(this.onArtistClose)
+    this.listenTo(ArtistActions.open, this.onArtistOpen)
+    this.listenTo(ArtistActions.close, this.onArtistClose)
   },
 
   onSpot() {
@@ -51,9 +52,10 @@ var Artist = React.createClass({
     if(this.state.open && id !== this.props.artist.id) {
 
       // if this artist is below the one closing
-      if(artistRect.top < this.getDOMNode().getBoundingClientRect().top) {
+      if(artistRect.top <= this.getDOMNode().getBoundingClientRect().top) {
 
         // scroll back the height of the previous artist's cotent
+        console.log(this.props.artist.name, window.scrollY - artistRect.height)
         this.scrollInstantToPosition(window.scrollY - artistRect.height)
 
         // remove the offset from scrollOrigin
