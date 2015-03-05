@@ -44,7 +44,7 @@ var ArtistContent = React.createClass({
   renderArtistMenu() {
     var favoriteButton = (
       <div onClick={this.onFavorite} className="artist-menu-item favorite">
-        {this.props.favorite ? 'Remove as favorite' : 'Add to favorites'}
+        {this.props.favorite ? 'Remove' : 'My Bylarm'}
       </div>
     )
 

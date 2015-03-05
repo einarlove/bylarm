@@ -68,16 +68,14 @@ var Lineup = React.createClass({
       'is-toggled': this.state.filterFavorites
     })
 
+    var dayTitle = window.innerWidth > 440 ? this.getParams().day : this.getParams().day.slice(0, 3)
+
     return (
       <main>
         <header className="lineup-header">
           <Link className="back-button" to="overview">Back</Link>
-          <h1 className="lineup-heading">{this.getParams().day}</h1>
-          <div className={favoriteFilterClass} onClick={this.toggleFilter}>
-            <span className="text">toggle favorites</span>
-            <div className="underlay"/>
-            <div className="switch"/>
-          </div>
+          <h1 className="lineup-heading">{dayTitle}</h1>
+          <div className={favoriteFilterClass} onClick={this.toggleFilter}>My Bylarm</div>
         </header>
 
         {this.renderHourSections()}
