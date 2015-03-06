@@ -168,16 +168,20 @@ var Artist = React.createClass({
       }
 
       this.setState({previewing: true})
-      this.previewAudio = new Audio(this.props.artist.music.preview.url)
-      this.previewAudio.play()
+
+      var audio = this.refs.previewAudio.getDOMNode()
+      audio.load()
+      audio.play()
     }
   },
 
   stopPreview() {
     if(!this.state.isTriggeringPreview && this.state.previewing) {
       this.setState({previewing: false})
-      this.previewAudio.pause()
-      this.previewAudio.currentTime = 0
+
+      var audio = this.refs.previewAudio.getDOMNode()
+      audio.pause()
+      audio.currentTime = 0
     }
   },
 
@@ -250,6 +254,10 @@ var Artist = React.createClass({
             <div className="preview-notice sub-title">
               hold for preview
             </div>
+
+            {this.props.artist.music && this.props.artist.music.preview &&
+              <audio preload="none" ref="previewAudio" src={this.props.artist.music.preview.url}/>
+            }
 
             <div className="close-button"></div>
             <div className="favorite-star"></div>
