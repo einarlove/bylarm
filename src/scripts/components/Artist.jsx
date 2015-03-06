@@ -30,8 +30,9 @@ var Artist = React.createClass({
 
   getDefaultProps() {
     return {
-      startPreviewDelay: 100,
-      stopPreviewDelay: 100
+      startPreviewDelay: 200,
+      stopPreviewDelay: 50,
+      scrollPreviewThreshold: 10
     }
   },
 
@@ -157,7 +158,15 @@ var Artist = React.createClass({
   },
 
   startPreview() {
-    if(this.state.isTriggeringPreview && !this.state.previewing) {
+    if(
+      this.state.isTriggeringPreview
+      && !this.state.previewing) {
+
+      var delta = Math.abs(this.state.triggerStartPosition - window.scrollY)
+      if(delta > this.props.scrollPreviewThreshold) {
+        return
+      }
+
       this.setState({previewing: true})
       this.previewAudio = new Audio(this.props.artist.music.preview.url)
       this.previewAudio.play()
@@ -174,7 +183,10 @@ var Artist = React.createClass({
 
   onPreviewTriggerEnter() {
     if(this.props.artist.music && this.props.artist.music.preview) {
-      this.setState({isTriggeringPreview: true})
+      this.setState({
+        isTriggeringPreview: true,
+        triggerStartPosition: window.scrollY
+      })
       setTimeout(this.startPreview, this.props.startPreviewDelay)
     }
   },
