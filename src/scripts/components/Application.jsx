@@ -4,10 +4,16 @@ var fastclick = require('fastclick')
 
 require('styles/Application')
 
+var Spot = require('../lib/Spot')
+
 var Application = React.createClass({
 
   componentDidMount() {
     fastclick.attach(document.body)
+  },
+
+  componentWillReceiveProps() {
+    Spot.refresh()
   },
 
   render() {

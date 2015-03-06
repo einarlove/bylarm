@@ -1,4 +1,4 @@
-var requestAnimationFrame = require('raf')
+var raf = require('raf')
 var assign = require('lodash/object/assign')
 
 var Spot = {
@@ -10,7 +10,7 @@ var Spot = {
 Spot.start = function() {
   if(!Spot.running) {
     Spot.running = true
-    Spot.interval()
+    raf(Spot.interval)
   }
 }
 
@@ -20,7 +20,6 @@ Spot.stop = function() {
 
 Spot.refresh = function() {
   Spot.forceRun = true
-  Spot.interval()
 }
 
 Spot.addListener = function(listener) {
@@ -53,7 +52,7 @@ Spot.interval = function() {
 
   // Skip this interval if scroll position is the same
   if(scrollTop === Spot.lastScrollTop && !Spot.forceRun) {
-    requestAnimationFrame(Spot.interval)
+    raf(Spot.interval)
     return
   }
 
@@ -92,7 +91,7 @@ Spot.interval = function() {
 
   Spot.forceRun = false
   Spot.lastScrollTop = scrollTop
-  requestAnimationFrame(Spot.interval)
+  raf(Spot.interval)
 }
 
 var convertHeightToPixels = function(value) {
