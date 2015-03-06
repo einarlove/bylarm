@@ -8,6 +8,9 @@
   padding-bottom: 50%
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
   -webkit-focus-ring-color:  rgba(0, 0, 0, 0)
+  user-select: none
+  overflow: hidden
+  background-color: #1b1b1b
 }
 
 
@@ -46,14 +49,16 @@
   font-size: 2em
   font-weight: 500
   letter-spacing: 0.25px
+  transition: .4s ease-out-cubic
 }
 
-.artist-header .context-venue {
+.artist-header .sub-title {
   position: absolute
-  font-size: 1.2em
+  font-size: 1em
   bottom: 1.3em
-  left: 1.35em
-  right: 1.35em
+  left: 1.5em
+  right: 1.5em
+  transition: .4s ease-out-cubic
 }
 
 .artist-name,
@@ -63,18 +68,43 @@
   overflow: hidden
 }
 
-.artist-header .context-venue::before {
+.artist-header .sub-title::before {
   content: ''
   display: inline-block
   height: 0.8em
   width: 0.6em
   margin: 0 .4em -0.05em .1em
-  background-image: url('assets/location-icon.svg')
   background-size: contain
   background-position: center
   background-repeat: no-repeat
 }
 
+.artist-header .context-venue::before {
+  background-image: url('assets/location-icon.svg')
+}
+
+.artist-header .preview-notice::before {
+  width: .8em
+  margin-bottom: -.08em
+  background-image: url('assets/play-icon.svg')
+}
+
+.open.show-preview-notice .artist-name {
+  transform: translate3d(0, .6em, 0)
+}
+
+.open.show-preview-notice .preview-notice {
+  opacity: 0
+  transform: translate3d(0, 1.2em, 0)
+}
+
+.preview-notice {
+  display: none
+}
+
+.show-preview-notice .preview-notice {
+  display: block
+}
 
 .artist-header .favorite-star {
   position: absolute
@@ -96,13 +126,16 @@
   transform: none
 }
 
+.show-preview-notice .favorite-star,
 .has-venue .favorite-star {
   bottom: 1.9em
 }
 
+.show-preview-notice .artist-name,
 .has-venue .artist-name {
-  bottom: 1.5em
+  bottom: 1.2em
 }
+
 
 .artist-image {
   position: absolute
@@ -126,4 +159,34 @@
   .artist-header {
     font-size: .9em
   }
+}
+
+.artist-image {
+  transition: opacity .3s ease-out-cubic
+}
+
+.info-overlay {
+  transition: opacity .3s ease-out-cubic
+}
+
+.is-previewing {
+  .artist-image {
+    opacity: .3
+  }
+  .info-overlay {
+    opacity: 0
+  }
+}
+
+.preview-overlay {
+  position: absolute
+  width: 80%
+  top: 50%
+  left: 10%
+  transform: translateY(-50%)
+  text-align: center
+}
+
+.preview-overlay .track-artist {
+  font-size: 2em
 }

@@ -28,6 +28,13 @@ var Artist = React.createClass({
     }
   },
 
+  getDefaultProps() {
+    return {
+      startPreviewDelay: 100,
+      stopPreviewDelay: 100
+    }
+  },
+
   componentDidMount() {
     this.listenTo(ArtistActions.open, this.onArtistOpen)
     this.listenTo(ArtistActions.close, this.onArtistClose)
@@ -76,6 +83,10 @@ var Artist = React.createClass({
   },
 
   onOpen() {
+    if(this.state.previewing) {
+      return
+    }
+
     this.setState({
       inTransition: true,
       scrollOrigin: window.scrollY
@@ -87,6 +98,10 @@ var Artist = React.createClass({
   },
 
   onClose() {
+    if(this.state.previewing) {
+      return
+    }
+
     this.setState({
       inTransition: true
     })
@@ -141,6 +156,51 @@ var Artist = React.createClass({
     }
   },
 
+  startPreview() {
+    if(this.state.isTriggeringPreview && !this.state.previewing) {
+      this.setState({previewing: true})
+      this.previewAudio = new Audio(this.props.artist.music.preview.url)
+      this.previewAudio.play()
+    }
+  },
+
+  stopPreview() {
+    if(!this.state.isTriggeringPreview && this.state.previewing) {
+      this.setState({previewing: false})
+      this.previewAudio.pause()
+      this.previewAudio.currentTime = 0
+    }
+  },
+
+  onPreviewTriggerEnter() {
+    if(this.props.artist.music && this.props.artist.music.preview) {
+      this.setState({isTriggeringPreview: true})
+      setTimeout(this.startPreview, this.props.startPreviewDelay)
+    }
+  },
+
+  onPreviewTriggerLeave() {
+    if(this.props.artist.music && this.props.artist.music.preview) {
+      this.setState({isTriggeringPreview: false})
+      setTimeout(this.stopPreview, this.props.stopPreviewDelay)
+    }
+  },
+
+  renderPreview() {
+    if(this.state.previewing) {
+      return (
+        <div className="preview-overlay">
+          <div className="track-artist">
+            {this.props.artist.name}
+          </div>
+          <div className="track-title">
+            {this.props.artist.music.preview.name}
+          </div>
+        </div>
+      )
+    }
+  },
+
   render() {
     var artist = this.props.artist
 
@@ -152,17 +212,38 @@ var Artist = React.createClass({
       'open': this.state.open,
       'not-open': !this.state.open,
       'has-venue': venue,
-      'is-favorite': this.props.favorite
+      'is-favorite': this.props.favorite,
+      'show-preview-notice': !venue && artist.music && artist.music.preview,
+      'is-previewing': this.state.previewing
     })
 
     return (
       <article className={className}>
-        <header className="artist-header" onClick={this.onHeaderClick}>
+        <header
+          className="artist-header"
+          onClick={this.onHeaderClick}
+          onMouseDown={this.onPreviewTriggerEnter}
+          onTouchStart={this.onPreviewTriggerEnter}
+          onTouchLeave={this.onPreviewTriggerLeave}
+          onTouchEnd={this.onPreviewTriggerLeave}
+          onMouseLeave={this.onPreviewTriggerLeave}
+          onMouseUp={this.onPreviewTriggerLeave}>
+
           <div className="artist-image" style={this.getHeaderImageStyle()}></div>
-          <h1 className="artist-name">{artist.name}</h1>
-          {venue && <div className="context-venue">{venue}</div>}
-          <div className="close-button"></div>
-          <div className="favorite-star"></div>
+
+          <div className="info-overlay">
+            <h1 className="artist-name">{artist.name}</h1>
+            {venue && <div className="context-venue sub-title">{venue}</div>}
+
+            <div className="preview-notice sub-title">
+              hold for preview
+            </div>
+
+            <div className="close-button"></div>
+            <div className="favorite-star"></div>
+          </div>
+
+          {this.renderPreview()}
         </header>
 
         {this.state.open && !artist.loading &&
